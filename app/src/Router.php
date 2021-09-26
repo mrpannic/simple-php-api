@@ -7,22 +7,32 @@ class Router {
     private static $options = [];
 
     public static function get($routeName, $handler){
+        if(array_key_exists($routeName, self::$get))
+            sendResponse(['message' => Router::routeExists($routeName), 'error' => true]);
         self::$get[$routeName] = [$handler[0], $handler[1]];
     }
     
     public static function post($routeName, $handler){
+        if(array_key_exists($routeName, self::$post))
+            sendResponse(['message' => Router::routeExists($routeName), 'error' => true]);
         self::$post[$routeName] = [$handler[0], $handler[1]];
     }
     
     public static function patch($routeName, $handler){
+        if(array_key_exists($routeName, self::$patch))
+            sendResponse(['message' => Router::routeExists($routeName), 'error' => true]);
         self::$patch[$routeName] = [$handler[0], $handler[1]];
     }
     
     public static function options($routeName, $handler){
+        if(array_key_exists($routeName, self::$options))
+            sendResponse(['message' => Router::routeExists($routeName), 'error' => true]);
         self::$options[$routeName] = [$handler[0], $handler[1]];
     }
     
     public static function delete($routeName, $handler){
+        if(array_key_exists($routeName, self::$delete))
+            sendResponse(['message' => Router::routeExists($routeName), 'error' => true]);
         self::$delete[$routeName] = [$handler[0], $handler[1]];
     }
     
@@ -48,6 +58,10 @@ class Router {
             'DELETE' => $deleteKeys,
             'OPTIONS' => $optionKeys
         ];
+    }
+
+    private static function routeExists($routeName){
+        return "Route {$routeName}::{$_SERVER['REQUEST_METHOD']} already exists.";
     }
 
 }
