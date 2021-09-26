@@ -5,6 +5,8 @@
 This api is capable of making various requests and adding new routes.
 
 Also the new routes can be defined in ```app/routes.php``` file. 
+The blueprint for creating a route is ```Router::${REQUEST_METHOD}($ROUTE_NAME_WITH_SLASH, $HANDLER)```
+Handler can be defined as ```Router::get('/route-name', [SomeController::class, 'name_of_method_inside_controller'])``` or you could pass a function instead of array with controller and method.
 
 ## Installation
 
@@ -20,7 +22,11 @@ Main one is for handling requests - ```handleRequest()``` - which uses Router cl
 It is possible to get data through ```requestData()``` method inside any static/instance method.
 
 ## Available Routes and Request Methods
+```GET /get-statistics``` - returns some statistics info (dummy data).  
+```POST /post-statistics```- returns just a message.   
+```DELETE /delete-statistics``` - returns just a message.  
+```PATCH /update-statistics``` - returns just a message.  
+```OPTIONS /get-routes``` - returns this all defined routes.  
 
-Available routes can be accessed through ```/get-routes``` OPTIONS method route.
+Supported request methods are ``` GET, POST, PATCH, PUT, UPDATE, DELETE```.
 
-Supported request methods are ``` GET, POST, PATCH, UPDATE, DELETE```.

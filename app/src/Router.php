@@ -5,6 +5,7 @@ class Router {
     private static $patch = [];
     private static $delete = [];
     private static $options = [];
+    private static $put = [];
 
     public static function get($routeName, $handler){
         if(array_key_exists($routeName, self::$get))
@@ -40,6 +41,18 @@ class Router {
         }
 
         self::$patch[$routeName] = $handler;
+    }
+
+    public static function put($routeName, $handler){
+        if(array_key_exists($routeName, self::$put))
+            sendResponse(['message' => Router::routeExists($routeName), 'error' => true]);
+
+        if(is_array($handler)){
+            self::$put[$routeName] = [$handler[0], $handler[1]];
+            return;
+        }
+
+        self::$put[$routeName] = $handler;
     }
     
     public static function options($routeName, $handler){
