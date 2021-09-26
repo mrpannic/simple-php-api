@@ -2,8 +2,14 @@
 
 function handleRequest(){
     try{
-        [$controller, $handler] = Router::getRoute();
-        sendResponse((new $controller)->$handler());
+        
+        $handler = Router::getRoute();
+
+        if(is_array($handler)){
+            [$controller, $handler] = $handler;
+            sendResponse((new $controller)->$handler());
+        }
+        sendResponse($handler());
     }
     catch(Exception $e){
         sendResponse(['message' => $e->getMessage(), 'error' => true]);
